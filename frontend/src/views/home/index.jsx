@@ -35,8 +35,7 @@ function Home() {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          mode: 'cors'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(newTask),
       })

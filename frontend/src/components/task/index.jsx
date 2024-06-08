@@ -9,8 +9,7 @@ const Task = ({ id, title, description, status}) => {
   const deleteTask = async () => {
     try {
       const response = await fetch(`${url}/${id}`, {
-        method: 'DELETE',
-        mode: 'cors'
+        method: 'DELETE'
       });
       if (!response.ok) {
         throw new Error('Failed to delete task')
@@ -30,8 +29,7 @@ const Task = ({ id, title, description, status}) => {
       const response = await fetch(`${url}/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
-          mode: 'cors'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(newTask),
       });
