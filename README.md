@@ -83,6 +83,7 @@ php artisan serve
 - Aunque se intentó integrar Redux, no se logró satisfactoriamente. Se mejorará la comprensión de su implementación para proyectos futuros.
 - No tenia mucha experiencia con Laravel. Se adquirió durante el desarrollo del proyecto aprendiendo sobre la marcha.
 - La API de Laravel utiliza autenticación mediante un token Bearer. Para acceder a los endpoints no protegidos, el usuario debe estar autenticado y poseer su token correspondiente.
+- Dentro del proyecto front, en src/api se encuentra un archivo que sirve como config para la url de la api, el proyecto laravel deberia correr en el puerto 8000, si por alguna razon no funciona se puede cambiar por la url de produccion la cual es https://wewindev.net/api
 
 ## 🛠️ Herramientas utilizadas
 
