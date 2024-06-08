@@ -1,15 +1,14 @@
 import { url } from '@/api';
 import styles from './Task.module.css';
-//import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const Task = ({ id, title, description, status}) => {
-
-  //const [newStatus, setNewStatus] = useState(status)
+const Task = ({ id, title, description, status, getTasks}) => {
 
   const deleteTask = async () => {
     try {
       const response = await fetch(`${url}/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        mode: 'cors',
       });
       if (!response.ok) {
         throw new Error('Failed to delete task')
@@ -17,6 +16,7 @@ const Task = ({ id, title, description, status}) => {
     } catch (error) {
       console.error('Error:', error)
     }
+    getTasks()
   }
 
   const handleToggleStatus = async () => {
@@ -31,15 +31,22 @@ const Task = ({ id, title, description, status}) => {
         headers: {
           'Content-Type': 'application/json'
         },
+        mode: 'cors',
         body: JSON.stringify(newTask),
       });
       if (!response.ok) {
-        throw new Error('Failed to toggle task status');
+        throw new Error('Failed to toggle task status')
       }
     } catch (error) {
       console.error('Error:', error)
     }
+    getTasks()
   }
+
+  const storeData = () => {
+    localStorage.setItem("id", id)
+    localStorage.setItem("status", status)
+  } 
 
   return (
     <div className={`${styles.task} ${status === 'Completada' ? styles.completed : ''}`}>
@@ -48,11 +55,18 @@ const Task = ({ id, title, description, status}) => {
       <p className={`${styles.status} ${status === 'Completada' ? styles.completedText : ''}`}>{status}</p>
       <div className={styles.buttons}>
         <button onClick={handleToggleStatus}>{status === 'Pendiente' ? 'Marcar como completada' : 'Marcar como pendiente'}</button>
-        <button>Edit</button>
-        <button onClick={deleteTask}>Delete</button>
+        <Link style={{
+          'background': 'var(--primary-color)',
+          'color': 'white',
+          'border': 'none',
+          'padding': '10px',
+          'cursor': 'pointer',
+          'borderRadius': '5px'
+        }} onClick={storeData} to={'/update'}>Editar</Link>
+        <button onClick={deleteTask}>Eliminar</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Task;

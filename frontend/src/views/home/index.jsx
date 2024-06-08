@@ -15,14 +15,15 @@ function Home() {
     document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light')
   }, [darkMode])
 
-  useEffect(() => {
-    const getTasks = async () => {
-      const request = await fetch(url);
-      const response = await request.json()
-      setTasks(response.tasks)
-    }
+  const getTasks = async () => {
+    const request = await fetch(url);
+    const response = await request.json()
+    setTasks(response.tasks)
+  }
+
+  useEffect(() => {  
     getTasks()
-  }, [tasks])
+  }, [])
 
   const onSubmit = async (data) => {
     const newTask = {
@@ -37,6 +38,7 @@ function Home() {
         headers: {
           'Content-Type': 'application/json'
         },
+        mode: 'cors',
         body: JSON.stringify(newTask),
       })
       if (!response.ok) {
@@ -44,6 +46,7 @@ function Home() {
       }
       console.log(response)
       reset()
+      getTasks()
     } catch (error) {
       console.error('Error:', error)
     }
@@ -98,9 +101,9 @@ function Home() {
           <option value="Pendiente">Pendiente</option>
           <option value="Completada">Completada</option>
         </select>
-        <button type="submit" className={styles.addButton}>Add Task</button>
+        <button type="submit" className={styles.addButton}>Agregar tarea</button>
       </form>
-      <TaskList tasks={filteredTasks} />
+      <TaskList tasks={filteredTasks} getTasks={getTasks}/>
     </div>
   )
 }
