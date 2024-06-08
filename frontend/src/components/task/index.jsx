@@ -1,13 +1,17 @@
 import { url } from '@/api';
 import styles from './Task.module.css';
 import { Link } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Task = ({ id, title, description, status, getTasks}) => {
 
   const deleteTask = async () => {
     try {
-      const response = await fetch(`${url}/${id}`, {
+      const response = await fetch(`${url}/tasks/${id}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
         mode: 'cors',
       });
       if (!response.ok) {
@@ -16,6 +20,7 @@ const Task = ({ id, title, description, status, getTasks}) => {
     } catch (error) {
       console.error('Error:', error)
     }
+    toast.success('Tarea eliminada')
     getTasks()
   }
 
@@ -26,10 +31,11 @@ const Task = ({ id, title, description, status, getTasks}) => {
       status: status === "Pendiente" ? 'Completada' : "Pendiente"
     }
     try {
-      const response = await fetch(`${url}/${id}`, {
+      const response = await fetch(`${url}/tasks/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         mode: 'cors',
         body: JSON.stringify(newTask),
@@ -65,6 +71,7 @@ const Task = ({ id, title, description, status, getTasks}) => {
         }} onClick={storeData} to={'/update'}>Editar</Link>
         <button onClick={deleteTask}>Eliminar</button>
       </div>
+      <Toaster />
     </div>
   )
 }

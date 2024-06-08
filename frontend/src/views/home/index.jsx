@@ -16,12 +16,17 @@ function Home() {
   }, [darkMode])
 
   const getTasks = async () => {
-    const request = await fetch(url);
+    const request = await fetch(`${url}/tasks`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+    });
     const response = await request.json()
     setTasks(response.tasks)
   }
 
-  useEffect(() => {  
+  useEffect(() => {
     getTasks()
   }, [])
 
@@ -33,10 +38,11 @@ function Home() {
     }
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(`${url}/tasks`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         mode: 'cors',
         body: JSON.stringify(newTask),
@@ -81,14 +87,14 @@ function Home() {
           type="text"
           name="title"
           {...register('title', { required: true })}
-          placeholder="Title"
+          placeholder="Titulo"
           className={styles.input}
         />
         <input
           type="text"
           name="description"
           {...register('description', { required: true })}
-          placeholder="Description"
+          placeholder="Descripcion"
           className={styles.input}
         />
         <select
@@ -103,7 +109,7 @@ function Home() {
         </select>
         <button type="submit" className={styles.addButton}>Agregar tarea</button>
       </form>
-      <TaskList tasks={filteredTasks} getTasks={getTasks}/>
+      <TaskList tasks={filteredTasks} getTasks={getTasks} />
     </div>
   )
 }
