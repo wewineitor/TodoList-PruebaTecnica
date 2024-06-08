@@ -10,6 +10,7 @@ const Task = ({ id, title, description, status}) => {
     try {
       const response = await fetch(`${url}/${id}`, {
         method: 'DELETE',
+        mode: 'cors'
       });
       if (!response.ok) {
         throw new Error('Failed to delete task')
@@ -30,6 +31,7 @@ const Task = ({ id, title, description, status}) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          mode: 'cors'
         },
         body: JSON.stringify(newTask),
       });
@@ -47,7 +49,7 @@ const Task = ({ id, title, description, status}) => {
       <p className={`${styles.description} ${status === 'Completada' ? styles.completedText : ''}`}>{description}</p>
       <p className={`${styles.status} ${status === 'Completada' ? styles.completedText : ''}`}>{status}</p>
       <div className={styles.buttons}>
-        <button onClick={handleToggleStatus}>{status === 'Pendiente' ? 'Mark as Completed' : 'Mark as Pending'}</button>
+        <button onClick={handleToggleStatus}>{status === 'Pendiente' ? 'Marcar como completada' : 'Marcar como pendiente'}</button>
         <button>Edit</button>
         <button onClick={deleteTask}>Delete</button>
       </div>
