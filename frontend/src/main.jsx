@@ -1,11 +1,12 @@
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from './views/home';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hola</div>,
+    element: <Home />,
   },
 ]);
 

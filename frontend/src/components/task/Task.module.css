@@ -1,0 +1,23 @@
+.task {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--secondary-bg-color);
+}
+
+.title {
+    color: var(--primary-text-color);
+}
+
+.description {
+    color: var(--secondary-text-color);
+}
+
+.status {
+    color: var(--primary-color);
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
